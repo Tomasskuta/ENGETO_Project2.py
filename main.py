@@ -27,9 +27,9 @@ def play(field,player_tick):
     while True:
 
         try:
-            playerYin = input(f"Player {player_tick} | Please enter your move numbers 'row column': ")
+            playerIn = input(f"Player {player_tick} | Please enter your move numbers 'row column': ")
 
-            player = playerYin.split()
+            player = playerIn.split()
 
             if len(player) != 2:
                 raise ValueError("Input must be in format: row column")
