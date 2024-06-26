@@ -1,7 +1,13 @@
+"""
+projekt_1.py: první projekt do Engeto Online Python Akademie
+author: Tomáš Škuta
+email: tomasskuta@seznam.cz
+discord: smajlikskutik
+"""
 import os
 
 def print_field(field):
-
+    
     os.system("cls")
     print("Welcome to Tic Tac Toe")
     print("============================================")
@@ -73,7 +79,7 @@ def play(field,player_tick):
         print_field(field)
 
 def end_game():
-    play_again = input("Do you wanna play again (Y/N)?: ")
+    play_again = input("Do you wanna play again (Y/N)?: ").upper()
     if play_again == "Y":
         return True
     else:
