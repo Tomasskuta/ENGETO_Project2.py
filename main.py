@@ -64,7 +64,7 @@ def play(field,player_tick):
         else:
             winner = False
 
-        if check_winner(winner):
+        if check_winner(winner,field):
             print(f"Player {player_tick} won!!!!")
             if end_game():
                 main()
@@ -85,7 +85,10 @@ def end_game():
     else:
         return False
         
-def check_winner(winner):
+def check_winner(winner,field):
+    field_sum = (sum(sum(1 for i in row if i == ' ') for row in field))
+    print(field_sum)
+
     if winner == True:
         return True
     else:
