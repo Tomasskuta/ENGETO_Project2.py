@@ -6,8 +6,10 @@ discord: smajlikskutik
 """
 import os
 
-def print_field(field):
-    
+def print_field(field: list[list]):
+    '''
+    Printing play field to console
+    '''
     os.system("cls")
     print("Welcome to Tic Tac Toe")
     print("============================================")
@@ -28,13 +30,17 @@ def print_field(field):
         print("o---o---o---o")
     print("============================================")
 
-def play(field,player_tick):
+def play():
+    '''
+    Main game function
+    '''
+    field = [[" " for _ in range(3)] for _ in range(3)]
+    player_tick = "O"
+    print_field(field)
 
     while True:
-
         try:
             playerIn = input(f"Player {player_tick} | Please enter your move numbers 'row column': ")
-
             player = playerIn.split()
 
             if len(player) != 2:
@@ -58,47 +64,53 @@ def play(field,player_tick):
             print(exception)
             continue
 
-        winner_quest = input("Do we have winner?: ")
-        if winner_quest == "Y":
-            winner = True
+        field_sum = (sum(sum(1 for i in row if i == ' ') for row in field))
+        if field_sum == 0:
+            print("Its a tie!")
+            end_game()
         else:
-            winner = False
-
-        if check_winner(winner,field):
-            print(f"Player {player_tick} won!!!!")
-            if end_game():
-                main()
+            winner_quest = input("Do we have winner?: ")
+            if winner_quest == "Y":
+                winner = True
             else:
-                exit()
+                winner = False
 
-        if player_tick != "X":
-            player_tick = "X"
-        else:
-            player_tick = "O"
+            if check_winner(winner,field):
+                print_field(field)
+                print(f"Player {player_tick} won!!!!")
+                end_game()
 
-        print_field(field)
+            if player_tick != "X":
+                player_tick = "X"
+            else:
+                player_tick = "O"
+
+            print_field(field)
 
 def end_game():
+    '''
+    Asking players if they want to play again, if yes calling main() again, if not exiting application
+    '''
     play_again = input("Do you wanna play again (Y/N)?: ").upper()
     if play_again == "Y":
-        return True
+        main()
     else:
-        return False
+        exit()
         
-def check_winner(winner,field):
-    field_sum = (sum(sum(1 for i in row if i == ' ') for row in field))
-    print(field_sum)
-
+def check_winner(winner: bool,field: list[list]) -> bool:
+    '''
+    Checking playing field, if there is some winner. Returning true/false
+    '''
     if winner == True:
         return True
     else:
         return False
 
 def main():
-    field = [[" " for _ in range(3)] for _ in range(3)]
-    player_tick = "O"
-    print_field(field)
-    play(field,player_tick)
+    '''
+    Main app function
+    '''
+    play()
 
 if __name__ == "__main__":
     main()
