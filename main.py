@@ -26,7 +26,7 @@ def print_field(field: list[list]):
     print("--------------------------------------------")
     print("o---o---o---o")
     for row in field:
-        print("| {} | {} | {} |".format(*row))
+        print("| {} | {} | {} |".format(*row))  #* is basically unpacking the row list - ['X', 'O', 'X'] will be unpacked to X O X
         print("o---o---o---o")
     print("============================================")
 
@@ -34,7 +34,7 @@ def play():
     '''
     Main game function
     '''
-    field = [[" " for _ in range(3)] for _ in range(3)]
+    field = [[" ", " ", " "],[" ", " ", " "], [" ", " ", " "]]
     player_tick = "O"
     print_field(field)
 
@@ -52,11 +52,11 @@ def play():
             if not ((1 <= int(player[0]) <= 3 and 1 <= int(player[1]) <= 3)):
                 raise ValueError("Input is not between 1-3")
 
-            playerR = int(player[0]) - 1
-            playerC = int(player[1]) - 1
+            row = int(player[0]) - 1
+            col = int(player[1]) - 1
 
-            if field[playerR][playerC] == " ":
-                field[playerR][playerC] = player_tick
+            if field[row][col] == " ":
+                field[row][col] = player_tick
             else:
                 raise ValueError("There is already something!")
 
@@ -64,28 +64,19 @@ def play():
             print(exception)
             continue
 
-        field_sum = (sum(sum(1 for i in row if i == ' ') for row in field))
+        if check_winner(field):
+            print_field(field)
+            print(f"Player {player_tick} won!!!!")
+            end_game()
+
+        field_sum = sum(sum(1 for i in row if i == ' ') for row in field)
         if field_sum == 0:
             print("Its a tie!")
             end_game()
-        else:
-            winner_quest = input("Do we have winner?: ")
-            if winner_quest == "Y":
-                winner = True
-            else:
-                winner = False
 
-            if check_winner(winner,field):
-                print_field(field)
-                print(f"Player {player_tick} won!!!!")
-                end_game()
+        player_tick = "X" if player_tick == "O" else "O"
 
-            if player_tick != "X":
-                player_tick = "X"
-            else:
-                player_tick = "O"
-
-            print_field(field)
+        print_field(field)
 
 def end_game():
     '''
@@ -97,14 +88,22 @@ def end_game():
     else:
         exit()
         
-def check_winner(winner: bool,field: list[list]) -> bool:
+def check_winner(field: list[list]) -> bool:
     '''
     Checking playing field, if there is some winner. Returning true/false
     '''
-    if winner == True:
+    for row in field:
+        if row[0] == row[1] == row[2] != " ":
+            return True
+        
+    for col in range(len(field)):
+        if field[0][col] == field[1][col] == field[2][col] != " ":
+            return True
+        
+    if field[0][0] == field[1][1] == field[2][2] != " " or field[0][2] == field[1][1] == field[2][0] != " ":
         return True
-    else:
-        return False
+       
+    return False
 
 def main():
     '''
