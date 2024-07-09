@@ -34,7 +34,7 @@ def play():
     '''
     Main game function
     '''
-    field = [[" ", " ", " "],[" ", " ", " "], [" ", " ", " "]]
+    field = [[" ", " ", " "],[" ", " ", " "], [" ", " ", " "]] 
     player_tick = "O"
     print_field(field)
 
